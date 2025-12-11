@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inspección de habitación · Krystal Grand Los Cabos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0.5rem;
+      background: #f3f4f6;
+      color: #000000;
+      font-weight: 500;
+    }
+
+    .sheet {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 0.8rem 1rem 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.14);
+      border: 1px solid #e5e7eb;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .left-text {
+      min-width: 140px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .center-title {
+      text-align: center;
+      flex: 1;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-top: 0.25rem;
+    }
+
+    .right-fields {
+      font-size: 0.74rem;
+      min-width: 230px;
+      font-weight: 600;
+    }
+
+    .right-fields div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.2rem;
+      gap: 0.25rem;
+    }
+
+    .right-fields label {
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .right-fields input,
+    .right-fields select {
+      flex: 1;
+      padding: 0.1rem 0.25rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .subheader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+      font-size: 0.8rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      font-weight: 600;
+    }
+
+    .subheader label {
+      margin-right: 0.25rem;
+      font-weight: 700;
+    }
+
+    .subheader input {
+      padding: 0.1rem 0.35rem;
+      font-size: 0.8rem;
+      max-width: 120px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .criteria-table-container,
+    .inspection-table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .criteria-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 0.5rem;
+      font-size: 0.74rem;
+      min-width: 360px;
+      font-weight: 600;
+    }
+
+    .criteria-table th,
+    .criteria-table td {
+      border: 1px solid #d1d5db;
+      padding: 0.18rem 0.35rem;
+    }
+
+    .criteria-table thead th {
+      background: #000000;
+      color: #f9fafb;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .criteria-table tbody td:first-child {
+      font-weight: 700;
+    }
+
+    .inspection-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.74rem;
+      min-width: 720px;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .inspection-table th,
+    .inspection-table td {
+      border: 1px solid #d1d5db;
+      padding: 0.18rem 0.3rem;
+      vertical-align: top;
+    }
+
+    .inspection-table th {
+      background: #000000;
+      color: #f9fafb;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .section-row th {
+      background: #000000;
+      color: #f9fafb;
+      text-align: left;
+      font-size: 0.74rem;
+      padding: 0.25rem 0.3rem;
+      font-weight: 700;
+    }
+
+    .num-cell {
+      width: 26px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .valor-cell {
+      width: 34px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .calif-cell,
+    .na-cell {
+      width: 45px;
+      text-align: center;
+    }
+
+    .obs-cell {
+      width: 30%;
+    }
+
+    .inspection-table input[type="number"] {
+      width: 40px;
+      padding: 0.1rem;
+      font-size: 0.74rem;
+      text-align: center;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .inspection-table input[type="checkbox"] {
+      transform: scale(1.05);
+    }
+
+    .inspection-table input[type="text"] {
+      width: 100%;
+      border: 0;
+      outline: none;
+      font-size: 0.74rem;
+      padding: 0.12rem 0.18rem;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .inspection-table input[type="text"]:focus {
+      outline: 1px solid #3b82f6;
+      border-radius: 3px;
+    }
+
+    .comments-block {
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .signature-section {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .signature-block {
+      flex: 1 1 260px;
+    }
+
+    .signature-block p {
+      margin: 0 0 0.25rem;
+      font-weight: 600;
+    }
+
+    .signature-canvas {
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid #9ca3af;
+      border-radius: 4px;
+      background: #f9fafb;
+      touch-action: none;
+      display: block;
+    }
+
+    .signature-actions {
+      margin-top: 0.25rem;
+      text-align: right;
+    }
+
+    .signature-actions button {
+      font-size: 0.7rem;
+      padding: 0.18rem 0.5rem;
+    }
+
+    .comments-block label {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-weight: 700;
+    }
+
+    .comments-block textarea {
+      width: 100%;
+      min-height: 60px;
+      resize: vertical;
+      padding: 0.35rem 0.4rem;
+      font-size: 0.8rem;
+      border-radius: 0.35rem;
+      border: 1px solid #d1d5db;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .actions-bar {
+      margin-top: 0.6rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .actions-bar button {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.78rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: #000000;
+      color: #f9fafb;
+      box-shadow: 0 3px 8px rgba(15,23,42,0.25);
+      font-weight: 600;
+    }
+
+    .actions-bar button:hover {
+      filter: brightness(1.08);
+    }
+
+    .instructions {
+      margin-top: 0.3rem;
+      font-size: 0.7rem;
+      text-align: center;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 0.25rem;
+      }
+      .sheet {
+        padding: 0.6rem;
+        max-width: 100%;
+        border-radius: 0.3rem;
+      }
+      .header-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .center-title {
+        text-align: left;
+        font-size: 0.95rem;
+      }
+      .right-fields {
+        width: 100%;
+      }
+      .inspection-table {
+        font-size: 0.7rem;
+      }
+    }
+
+    @media print {
+      .creditos { display: none !important; }
+      @page {
+        size: A4;
+        margin: 5mm;
+      }
+      body {
+        padding: 0;
+        background: #ffffff;
+        font-size: 0.65rem;
+      }
+      .sheet {
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .header-row {
+        gap: 0.2rem;
+      }
+      .left-text,
+      .center-title,
+      .right-fields label,
+      .right-fields input {
+        font-size: 0.7rem;
+      }
+      .center-title {
+        font-size: 0.78rem;
+      }
+      .subheader-grid {
+        font-size: 0.65rem;
+        gap: 0.2rem;
+      }
+      .subheader-grid input,
+      .subheader-grid output {
+        font-size: 0.65rem;
+        padding: 0.08rem 0.12rem;
+      }
+      .inspection-table {
+        font-size: 0.62rem;
+      }
+      .inspection-table th,
+      .inspection-table td {
+        padding: 0.06rem 0.08rem;
+      }
+      .inspection-table input[type="text"] {
+        font-size: 0.6rem;
+        padding: 0.06rem;
+      }
+      .comments-block {
+        margin-top: 0.4rem;
+        page-break-before: always;
+      }
+      .comments-block textarea {
+        min-height: 30px;
+        font-size: 0.65rem;
+        padding: 0.25rem 0.3rem;
+      }
+      .signature-section {
+        margin-top: 0.4rem;
+        font-size: 0.65rem;
+        gap: 0.5rem;
+      }
+      .signature-canvas {
+        height: 60px;
+      }
+      .actions-bar,
+      .instructions {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet" id="hoja-evaluacion">
+    <div class="header-row">
+      <div class="left-text">
+        KRYSTAL GRAND<br>LOS CABOS
+      </div>
+      <div class="center-title">
+        INSPECCIÓN DE HABITACIÓN
+      </div>
+      <div class="right-fields">
+        <div>
+          <label for="fecha">Fecha:</label>
+          <input type="date" id="fecha" name="fecha">
+        </div>
+        <div>
+          <label for="habitacion">Habitación:</label>
+          <input type="text" id="habitacion" name="habitacion">
+        </div>
+        <div>
+          <label for="camarista">Camarista:</label>
+          <input list="listaCamaristas" id="camarista" name="camarista" placeholder="Escribe número o nombre...">
+          <datalist id="listaCamaristas">
+            <option value="252417 - MARTINEZ FONSECA EVA MARIA"></option>
+            <option value="253264 - APOLINAR NAVA SILVINA"></option>
+            <option value="253985 - GARCIA PALMA YENI"></option>
+            <option value="254106 - FERRER RODRIGUEZ LIZANDRA MARICE"></option>
+            <option value="253154 - MAXIMO AGUILAR MARIA CRISTINA"></option>
+            <option value="253334 - NAVARRETE APARICIO MARVELLA"></option>
+            <option value="252289 - OLIVERA PINACHO FLORA"></option>
+            <option value="254006 - MOLINA LOPEZ KENYA"></option>
+            <option value="251352 - NERI PASCUAL HILDA"></option>
+            <option value="254148 - MARTINEZ LUNA ALMA DELIA"></option>
+            <option value="254206 - SALOME HERNANDEZ SILVIA"></option>
+            <option value="253385 - CRUZ GONZALEZ EUSEBIA"></option>
+            <option value="254128 - BURGOIN AMADOR DANIELA MARGARITA"></option>
+            <option value="253828 - ARTEAGA LOPEZ LAURA BELEN"></option>
+            <option value="250760 - BAUTISTA RUVALCABA HORTENCIA"></option>
+            <option value="253844 - MENDOZA MORALES CAROLINA YAMILENI"></option>
+            <option value="253886 - VELASCO LUNA CLAUDIA MIRNA"></option>
+            <option value="253984 - VICENTE MORALES ELVIRA"></option>
+            <option value="254034 - JUAREZ VILLANUEVA LUISA YARET"></option>
+            <option value="254150 - HERNANDEZ CARCAMO ERIKA"></option>
+            <option value="254201 - ARELLANES LOPEZ AURORA"></option>
+            <option value="254208 - FLORES GALICIA MARIA CANDELARIA"></option>
+            <option value="253272 - ROMERO JIMENEZ ARACELI"></option>
+            <option value="254001 - VAZQUEZ LOPEZ TANIA ALEJANDRA"></option>
+            <option value="254041 - VELAZQUEZ ADAME LUCIANO"></option>
+            <option value="252314 - AGUIRRE ZAMORA MARIA DE LOURDES"></option>
+            <option value="253961 - GARCIA DE LA CRUZ ANGELA"></option>
+            <option value="253483 - CRUZ HERNANDEZ ELVIA"></option>
+          </datalist>
+        </div>
+        <div>
+          <label for="inspector">Supervisión:</label>
+          <select id="inspector" name="inspector">
+            <option value="">Selecciona...</option>
+            <optgroup label="Supervisores de Camarista">
+              <option value="250026">250026 - DE LEON GONZALEZ MARIA LUDI</option>
+              <option value="253956">253956 - GARCIA NOGUEDA ROSA ANGELA</option>
+              <option value="254178">254178 - MONTIEL DOMINGUEZ ANA GABRIELA</option>
+              <option value="254181">254181 - ESPINOZA SALDAÑA NANCY DANIELA</option>
+            </optgroup>
+            <optgroup label="Gerente de Ama de Llaves">
+              <option value="253812">253812 - SOSA SUAZO ULISES GREGORIO</option>
+            </optgroup>
+            <optgroup label="Asistente de Ama de Llaves">
+              <option value="254231">254231 - JUAREZ PINEDA LUIS HERNALDO</option>
+            </optgroup>
+          </select>
+        </div>
+        <div>
+          <label for="puesto">Puesto:</label>
+          <input type="text" id="puesto" name="puesto" readonly>
+        </div>
+      </div>
+    </div>
+
+    <div class="subheader">
+      <div>
+        <label for="resultado">Resultado general:</label>
+        <input type="text" id="resultado" name="resultado" placeholder="-- / 82" readonly>
+      </div>
+      <div>
+        <label for="porcentaje">Porcentaje habitación:</label>
+        <input type="text" id="porcentaje" name="porcentaje" placeholder="-- %" readonly>
+      </div>
+    </div>
+
+    <div class="criteria-table-container">
+      <table class="criteria-table">
+        <thead>
+          <tr>
+            <th colspan="3">CRITERIOS DE CALIFICACIÓN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bien</td>
+            <td>Cumple totalmente</td>
+            <td style="text-align:center;">2</td>
+          </tr>
+          <tr>
+            <td>Regular</td>
+            <td>Falla en un criterio</td>
+            <td style="text-align:center;">1</td>
+          </tr>
+          <tr>
+            <td>Mal</td>
+            <td>Falla más de un criterio</td>
+            <td style="text-align:center;">-1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="inspection-table-container">
+      <table class="inspection-table">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Conceptos</th>
+            <th>Valor</th>
+            <th>Calif</th>
+            <th>N/A</th>
+            <th>OBSERVACIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Sección ACCESO PRINCIPAL -->
+          <tr class="section-row">
+            <th colspan="6">ACCESO PRINCIPAL</th>
+          </tr>
+          <tr>
+            <td class="num-cell">1</td>
+            <td>Limpieza de Número de habitación, puerta principal, mirilla, piso exterior, chapa, apagadores, plano y ruta de evacuación y tarjeta de No molestar.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">2</td>
+            <td>Aroma de Habitación agradable.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+
+          <!-- PASILLO ENTRADA / CLOSET -->
+          <tr class="section-row">
+            <th colspan="6">PASILLO ENTRADA / CLOSET</th>
+          </tr>
+          <tr>
+            <td class="num-cell">3</td>
+            <td>Puertas, repisas, pared, Rejillas.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">4</td>
+            <td>8 ganchos de madera sin pinzas, Si cuenta con batas son + 2, 2 ganchos de madera con pinzas.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">5</td>
+            <td>Plancha sin agua y cable doblado y tabla para planchar.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">6</td>
+            <td>1 bolsa y 1 lista de lavandería conforme el estándar.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">7</td>
+            <td>Batas colgadas en gancho con tarjeta costo de bata y pantuflas con logo de marca empalmadas. Donde aplique.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">8</td>
+            <td>Caja de Seguridad abierta con tapete, tent card fuera de caja.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">9</td>
+            <td>Maletero libre de pertenencias, limpio y en buen estado.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+
+          <!-- MINIBAR / CAFETERA -->
+          <tr class="section-row">
+            <th colspan="6">MINIBAR / CAFETERA</th>
+          </tr>
+          <tr>
+            <td class="num-cell">10</td>
+            <td>Minibar limpieza por dentro y afuera.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">11</td>
+            <td>2 almohadas matrimoniales en bolsa y 1 cobertor.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">12</td>
+            <td>Charola y Cafetera limpia.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">13</td>
+            <td>2 tazas y dos vasos tamaño roca.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">14</td>
+            <td>Hielera con tapa y pinzas en buen estado y limpias.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+
+          <!-- BAÑO -->
+          <tr class="section-row">
+            <th colspan="6">BAÑO</th>
+          </tr>
+          <tr>
+            <td class="num-cell">15</td>
+            <td>Puerta de acceso limpia por ambas partes.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">16</td>
+            <td>Pared, apagadores limpios, plafón y piso sin rastros de humedad, rejilla de extracción limpios y en buen estado.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">17</td>
+            <td>Regadera, manerales, cebolla de regadera y regadera de teléfono libres de óxido, limpios y en buen estado. (Regadera de teléfono apuntando hacia la pared).</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">18</td>
+            <td>Tapete de felpa doblado fuera de regadera limpio y en buen estado.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">19</td>
+            <td>Puertas de cristal de baño o cortina libre de moho, limpias y en buen estado.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">20</td>
+            <td>Limpieza WC con tapa ajustada.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">21</td>
+            <td>Hay 2 rollos de papel de baño.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+
+          <!-- BAÑO / AMENIDADES (22–26) -->
+          <tr>
+            <td class="num-cell">22</td>
+            <td>Toallas de baño: 3 en KS, 4 en camas MT. Toallas de mano: 2 KS, 3 MT.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">23</td>
+            <td>Meseta de lavabo, espejo de baño, espejo de vanidad, secador de cabello independiente.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">24</td>
+            <td>Faciales: 2 KS, 3 MT, en habitaciones Altitud.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">25</td>
+            <td>2 vasos de vidrio tipo roca. Portapañuelos surtido sin ninguna evidencia de manipulación.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">26</td>
+            <td>Bote de basura con bolsa plástica área WC.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+
+          <!-- HABITACIÓN -->
+          <tr class="section-row">
+            <th colspan="6">HABITACIÓN</th>
+          </tr>
+          <tr>
+            <td class="num-cell">27</td>
+            <td>Paredes, techo, piso de habitación.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">28</td>
+            <td>Iluminación, sin focos fundidos, contactos limpios.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">29</td>
+            <td>A/A a 25° C Velocidad: Auto, Mood: 24° C.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">30</td>
+            <td>Cuadro decorativo y espejo de cuerpo completo.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">31</td>
+            <td>Lámparas de lectura apuntando hacia el suelo.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">32</td>
+            <td>Parte superior: teléfono funcional con carátula y no. de habitación correcto. Parte inferior: control remoto.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">33</td>
+            <td>T.V. para llegadas encendida en canal interno y volumen a nivel 10.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">34</td>
+            <td>Sofá Cama (Limpieza y Estado).</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">35</td>
+            <td>Mesa de centro, sillas, cocineta (si aplica).</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+
+          <!-- CAMA -->
+          <tr class="section-row">
+            <th colspan="6">CAMA</th>
+          </tr>
+          <tr>
+            <td class="num-cell">36</td>
+            <td>Cabecera y base.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">37</td>
+            <td>Tendido de cama (4 Almohadas, Inserto de Duvet, Sábanas) Blancos libres de manchas y cabellos.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+
+          <!-- ÁREA TERRAZA -->
+          <tr class="section-row">
+            <th colspan="6">ÁREA TERRAZA</th>
+          </tr>
+          <tr>
+            <td class="num-cell">38</td>
+            <td>Estado y limpieza de las cortinas (Black out &amp; decorativa).</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">39</td>
+            <td>Mobiliario: Mesa y 2 sillas (Limpieza y Estado). Swim out con dos camastros y mesa.</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">40</td>
+            <td>Paredes, pisos, lámparas. (Limpieza y Estado).</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+          <tr>
+            <td class="num-cell">41</td>
+            <td>Jacuzzi limpio y en buen estado (si aplica).</td>
+            <td class="valor-cell">2</td>
+            <td class="calif-cell"><input class="calif" type="number" min="0" max="2"></td>
+            <td class="na-cell"><input class="na" type="checkbox"></td>
+            <td class="obs-cell"><input type="text"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="comments-block">
+      <label for="comentarios">Comentarios de la camarista:</label>
+      <textarea id="comentarios" name="comentarios" placeholder="Escribe aquí observaciones o comentarios adicionales."></textarea>
+    </div>
+
+    <div class="signature-section">
+      <div class="signature-block">
+        <p>Firma de la camarista:</p>
+        <canvas id="firmaCamarista" class="signature-canvas" width="320" height="120"></canvas>
+        <div class="signature-actions">
+          <button type="button" onclick="limpiarFirma('firmaCamarista')">Limpiar firma</button>
+        </div>
+      </div>
+      <div class="signature-block">
+        <p>Firma del supervisor:</p>
+        <canvas id="firmaSupervisor" class="signature-canvas" width="320" height="120"></canvas>
+        <div class="signature-actions">
+          <button type="button" onclick="limpiarFirma('firmaSupervisor')">Limpiar firma</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-bar">
+      <button type="button" onclick="descargarEvaluacionPDF()">Descargar evaluación (PDF)</button>
+      <button type="button" onclick="window.print()">Imprimir PDF</button>
+      <button type="button" onclick="limpiarFormulario()">Limpiar</button>
+      <button type="button" id="btnNube" onclick="enviarANube()">Guardar en nube (Drive + Registro)</button>
+    </div>
+
+    <p class="instructions">
+      *Al terminar la inspección, verifica la información y presiona <strong>“Guardar en nube (Drive + Registro)”</strong> para enviar este checklist a la carpeta de Drive y registrar el historial en la hoja de cálculo.*
+    </p>
+  </div>
+
+  <script>
+    function actualizarResultados() {
+      const califs = document.querySelectorAll('.calif');
+      const nas = document.querySelectorAll('.na');
+      let suma = 0;
+      let max = 0;
+      califs.forEach((input, idx) => {
+        const na = nas[idx] && nas[idx].checked;
+        if (!na) {
+          max += 2;
+          const val = parseFloat(input.value);
+          if (!isNaN(val)) suma += val;
+        }
+      });
+      const resultado = document.getElementById('resultado');
+      const porcentaje = document.getElementById('porcentaje');
+      if (max > 0) {
+        resultado.value = suma + ' / ' + max;
+        porcentaje.value = (suma * 100 / max).toFixed(1) + ' %';
+      } else {
+        resultado.value = '';
+        porcentaje.value = '';
+      }
+    }
+
+    function asignarPuesto() {
+      const valor = document.getElementById('inspector').value;
+      let puesto = '';
+      const supervisores = ['250026','253956','254178','254181'];
+      if (supervisores.includes(valor)) puesto = 'SUPERVISOR DE CAMARISTA';
+      else if (valor === '254231') puesto = 'ASISTENTE DE AMA DE LLAVES';
+      else if (valor === '253812') puesto = 'GERENTE DE AMA DE LLAVES';
+      document.getElementById('puesto').value = puesto;
+    }
+
+    function descargarEvaluacionPDF() {
+      window.print();
+    }
+
+    function limpiarFormulario() {
+      // Limpiar firmas
+      limpiarFirma('firmaCamarista');
+      limpiarFirma('firmaSupervisor');
+
+      document.querySelectorAll('input[type="text"], input[type="number"]').forEach(el => el.value = '');
+      document.getElementById('comentarios').value = '';
+      document.getElementById('camarista').value = '';
+      document.getElementById('inspector').value = '';
+      document.getElementById('puesto').value = '';
+      document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+
+      const hoy = new Date();
+      const year = hoy.getFullYear();
+      const month = String(hoy.getMonth() + 1).padStart(2, '0');
+      const day = String(hoy.getDate()).padStart(2, '0');
+      document.getElementById('fecha').value = `${year}-${month}-${day}`;
+
+      actualizarResultados();
+    }
+
+
+
+    function prepararCanvasFirma(id) {
+      const canvas = document.getElementById(id);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let dibujando = false;
+      let rect = canvas.getBoundingClientRect();
+
+      function obtenerPosicion(e) {
+        if (e.touches && e.touches.length > 0) {
+          const t = e.touches[0];
+          return { x: t.clientX - rect.left, y: t.clientY - rect.top };
+        }
+        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      }
+
+      function iniciarTrazo(e) {
+        e.preventDefault();
+        rect = canvas.getBoundingClientRect();
+        dibujando = true;
+        const pos = obtenerPosicion(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+      }
+
+      function trazar(e) {
+        if (!dibujando) return;
+        e.preventDefault();
+        const pos = obtenerPosicion(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.strokeStyle = '#111827';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+      }
+
+      function finalizarTrazo(e) {
+        if (!dibujando) return;
+        e.preventDefault();
+        dibujando = false;
+      }
+
+      canvas.addEventListener('mousedown', iniciarTrazo);
+      canvas.addEventListener('mousemove', trazar);
+      window.addEventListener('mouseup', finalizarTrazo);
+      canvas.addEventListener('touchstart', iniciarTrazo, { passive: false });
+      canvas.addEventListener('touchmove', trazar, { passive: false });
+      window.addEventListener('touchend', finalizarTrazo);
+    }
+
+    function limpiarFirma(id) {
+      const canvas = document.getElementById(id);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    async function enviarANube() {
+      const btn = document.getElementById('btnNube');
+      if (!btn) return;
+
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Enviando...';
+
+      try {
+        const fecha = document.getElementById('fecha').value || '';
+        const habitacion = document.getElementById('habitacion').value || '';
+        const camarista = document.getElementById('camarista').value || '';
+        const inspector = document.getElementById('inspector').value || '';
+        const puesto = document.getElementById('puesto').value || '';
+        const resultado = document.getElementById('resultado').value || '';
+        const porcentaje = document.getElementById('porcentaje').value || '';
+        const comentarios = document.getElementById('comentarios').value || '';
+
+
+        const firmasImagen = [];
+        ['firmaCamarista','firmaSupervisor'].forEach(id => {
+          const canvas = document.getElementById(id);
+          if (canvas) {
+            try {
+              const dataUrl = canvas.toDataURL('image/png');
+              const img = document.createElement('img');
+              img.src = dataUrl;
+              img.alt = id === 'firmaCamarista' ? 'Firma camarista' : 'Firma supervisor';
+              img.style.display = 'none';
+              canvas.parentNode.appendChild(img);
+              firmasImagen.push(img);
+            } catch (e) {
+              console.warn('No se pudo convertir la firma a imagen', e);
+            }
+          }
+        });
+
+        const hoja = document.getElementById('hoja-evaluacion');
+        const htmlContenido = hoja ? hoja.outerHTML : document.documentElement.outerHTML;
+
+        firmasImagen.forEach(img => img.remove());
+
+        let nombreArchivoBase = 'Checklist_Habitacion';
+        if (habitacion) nombreArchivoBase += '_' + habitacion;
+        if (fecha) nombreArchivoBase += '_' + fecha.replace(/-/g, '');
+
+        const payload = {
+          fecha,
+          habitacion,
+          camarista,
+          inspector,
+          puesto,
+          resultado,
+          porcentaje,
+          comentarios,
+          html: htmlContenido,
+          nombreArchivo: nombreArchivoBase
+        };
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/TU_ID_DE_SCRIPT_AQUI/exec'; // 👈 Reemplaza con tu URL de Apps Script
+
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        // Con mode: 'no-cors' no podemos leer la respuesta, pero asumimos éxito si no truena el fetch
+        alert('Checklist enviado a la nube. ✅\nRevisa la carpeta de Drive y la hoja de cálculo.');
+      } catch (error) {
+        console.error(error);
+        alert('Ocurrió un error al enviar a la nube. Revisa tu conexión o avisa a Luis.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const hoy = new Date();
+      const year = hoy.getFullYear();
+      const month = String(hoy.getMonth() + 1).padStart(2, '0');
+      const day = String(hoy.getDate()).padStart(2, '0');
+      document.getElementById('fecha').value = `${year}-${month}-${day}`;
+
+      document.querySelectorAll('.calif').forEach(input => {
+        input.addEventListener('input', actualizarResultados);
+      });
+      document.querySelectorAll('.na').forEach(chk => {
+        chk.addEventListener('change', actualizarResultados);
+      });
+      document.getElementById('inspector').addEventListener('change', asignarPuesto);
+      prepararCanvasFirma('firmaCamarista');
+      prepararCanvasFirma('firmaSupervisor');
+      actualizarResultados();
+    });
+  </script>
+
+    <p class="creditos" style="text-align:center; font-size:0.65rem; margin-top:0.8rem; color:#6b7280;">
+      Formato desarrollado para uso operativo de Ama de Llaves — Krystal Grand Los Cabos.<br>
+      Administrado por: <strong>Luis Hernaldo Juárez</strong>, Asistente de Ama de Llaves.
+    </p>
+
+</body>
+</html>
